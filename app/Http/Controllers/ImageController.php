@@ -15,7 +15,7 @@ class ImageController extends Controller
 
     public function show()
     {
-        // return all images
+        return Image::latest()->pluck('name')->toArray();
     }
 
     public function store(Request $request)
@@ -36,10 +36,11 @@ class ImageController extends Controller
 
         $uploadedFile = $request->file('image');
 
+
         return Image::create([
             'name' => $uploadedFile->hashName(),
             'extension' => $uploadedFile->extension(),
             'size' => $uploadedFile->getSize(),
-        ]);
+        ])->name;
     }
 }
