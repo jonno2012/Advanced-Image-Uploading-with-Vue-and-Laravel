@@ -1,0 +1,26 @@
+- laravel new my-app
+- npm install --save-dev vue@next
+- npm install vue-loader@next
+- npm i @vitejs/plugin-vue
+- npm install
+- npm run dev
+
+app.js:
+// vite.config.js
+import { defineConfig } from 'vite';
+import laravel from 'laravel-vite-plugin';
+import vue from '@vitejs/plugin-vue'
+
+
+export default defineConfig({
+    plugins: [
+        vue(),
+        laravel([
+            'resources/css/app.css',
+            'resources/js/app.js',
+        ]),
+    ],
+});
+
+
+https://techsolutionstuff.com/post/how-to-install-vue-3-in-laravel-9-with-vite-step-by-step
