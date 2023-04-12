@@ -6,8 +6,10 @@
                 ref="pond"
                 label-idle="Click to choose image or drag here..."
                 @init="filepondInitialize"
-                accepted-file-types="image/*"
+                accepted-file-types="image/jpg, image/jpeg, image/png"
                 @processFile="handleProcessedFile"
+                allowMultiple="true"
+                maxFileSize="1MB"
             />
         </div>
         <div class="mt-8 mb-24">
@@ -25,19 +27,27 @@
 import vueFilepond, { setOptions } from "vue-filepond";
 import "filepond/dist/filepond.min.css";
 import FilePondPluginFileValidationType from 'filepond-plugin-file-validate-type';
+import FilePondPluginFileValidateSize from 'filepond-plugin-file-validate-size';
 
+let serverMessage = {};
 setOptions({
     server: {
         process: {
             url: './upload',
+            onerror: (response) => {
+                serverMessage = JSON.parse(response)
+            },
             headers: {
                 'X-CSRF-TOKEN': document.head.querySelector('meta[name="csrf_token"]').content
             }
         }
+    },
+    labelFileProcessingError: () => {
+        return serverMessage.error;
     }
 });
 
-const FilePond = vueFilepond(FilePondPluginFileValidationType);
+const FilePond = vueFilepond(FilePondPluginFileValidationType, FilePondPluginFileValidateSize);
 
 export default {
     components: {
