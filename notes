@@ -24,3 +24,7 @@ export default defineConfig({
 
 
 https://techsolutionstuff.com/post/how-to-install-vue-3-in-laravel-9-with-vite-step-by-step
+
+
+- remember to set up csrf for filepond. see meta tag on index page etc.
+- remember to run php artisan storage:link to set up symlink between storage > images to the public dir.
